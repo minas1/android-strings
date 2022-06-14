@@ -43,6 +43,13 @@ private class AppTranslation(var line: String) {
         }
 
     override fun toString(): String = line
+
+    companion object {
+
+        fun of(name: String, value: String): AppTranslation {
+            return AppTranslation("    <string name=\"$name\">$value</string>")
+        }
+    }
 }
 
 data class UserTranslation(
@@ -55,7 +62,7 @@ fun main(argv: Array<String>) {
     val args = parseArgs(argv)
 
     val originalTranslations = parseAppTranslations(args.originalStringsFile)
-    val localizedTranslations = parseAppTranslations(args.localizedStringsFile)
+    val localizedTranslations = parseAppTranslations(args.localizedStringsFile).toMutableList()
 
     val userTranslations = parseUserTranslations(args.userTranslationsFile)
 
@@ -65,15 +72,17 @@ fun main(argv: Array<String>) {
     for (userTranslation in userTranslations) {
 
         val original = originalTranslations.firstOrNull { it.name == userTranslation.key }
+            ?: continue
         val localized = localizedTranslations.firstOrNull { it.name == userTranslation.key }
 
-        if (original != null && localized != null) {
-
+        if (localized != null) {
             if (userTranslation.originalValue == original.value) {
                 localized.value = userTranslation.localizedValue
             } else {
                 warnings.add("${userTranslation.key} translation (${userTranslation.originalValue}) does not match original translation in app's resources (${original.value}).")
             }
+        } else if (userTranslation.localizedValue.isNotEmpty()) {
+            localizedTranslations.add(localizedTranslations.size - 1, AppTranslation.of(original.name!!, userTranslation.localizedValue))
         }
     }
 
