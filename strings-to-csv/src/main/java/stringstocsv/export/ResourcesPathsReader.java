@@ -5,6 +5,7 @@ import stringstocsv.model.Language;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +42,9 @@ public class ResourcesPathsReader {
         paths = paths.stream()
                 .filter(path -> path.endsWith("strings.xml") || path.endsWith("plurals.xml"))
                 .filter(path -> !path.toString().contains("values-v28"))
-                .filter(path -> !path.toString().contains("release/res"))
-                .filter(path -> !path.toString().contains("debug/res"))
-                .filter(path -> path.toString().contains("main/res"))
+                .filter(path -> !path.toString().contains(Paths.get("release", "res").toString()))
+                .filter(path -> !path.toString().contains(Paths.get("debug", "res").toString()))
+                .filter(path -> path.toString().contains(Paths.get("main", "res").toString()))
                 .collect(Collectors.toList());
 
         return paths;
