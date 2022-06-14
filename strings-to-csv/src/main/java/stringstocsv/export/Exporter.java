@@ -70,7 +70,7 @@ public class Exporter {
                     pluralCsvWriter.export(destinationPath, defaultLanguagePlurals, plurals);
                 }
                 else {
-                    throw new RuntimeException("Unhandled path " + path.toString());
+                    throw new RuntimeException("Unhandled path " + path);
                 }
             }
         }

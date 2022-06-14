@@ -6,6 +6,7 @@ import stringstocsv.model.PluralItem;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -26,7 +27,7 @@ public class PluralCsvWriter {
         try {
             Files.createDirectories(path.getParent());
 
-            try (CSVWriter writer = new CSVWriter(new FileWriter(path.toFile()))) {
+            try (CSVWriter writer = new CSVWriter(new FileWriter(path.toFile(), StandardCharsets.UTF_8))) {
 
                 writer.writeNext(new String[] {"key", "quantity", "Default (Do not change)", "Localized (Translate here)"});
 
@@ -85,7 +86,7 @@ public class PluralCsvWriter {
 
         // If the localized language does not have some quantities (some quantities do not apply for
         // some languages), skip it.
-        if (!temp.isPresent()) {
+        if (temp.isEmpty()) {
             return null;
         }
 

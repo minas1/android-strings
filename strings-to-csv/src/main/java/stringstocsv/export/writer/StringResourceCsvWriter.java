@@ -5,6 +5,7 @@ import stringstocsv.model.ResourceString;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -24,7 +25,7 @@ public class StringResourceCsvWriter {
         try {
             Files.createDirectories(path.getParent());
 
-            try( CSVWriter writer = new CSVWriter(new FileWriter(path.toFile()))) {
+            try( CSVWriter writer = new CSVWriter(new FileWriter(path.toFile(), StandardCharsets.UTF_8))) {
 
                 writer.writeNext(new String[] {"key", "Default (Do not change)", "Localized (Translate here)"});
 
