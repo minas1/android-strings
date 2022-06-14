@@ -1,3 +1,2 @@
-rootProject.name = 'stringstocsv'
-include 'csv-to-string'
+rootProject.name = 'strings-to-csv'
 
