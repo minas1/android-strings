@@ -1,12 +1,11 @@
 package stringstocsv;
 
-import com.opencsv.CSVReader;
-import com.opencsv.CSVReaderHeaderAware;
+import org.apache.commons.lang3.tuple.Pair;
 import stringstocsv.model.Language;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -14,15 +13,11 @@ public class LanguagesSupplier implements Supplier<List<Language>> {
 
     @Override
     public List<Language> get() {
-
-        try (CSVReader reader = new CSVReaderHeaderAware(new InputStreamReader(getClass().getResourceAsStream("/language-codes.csv")))) {
-
-            return reader.readAll().stream()
-                    .map(columns -> new Language(columns[1], columns[0]))
-                    .collect(Collectors.toList());
-        }
-        catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        return Arrays.stream(Locale.getAvailableLocales())
+                .filter(locale -> !locale.getLanguage().isEmpty())
+                .map(locale -> Pair.of(locale.getDisplayLanguage(), locale.getLanguage()))
+                .distinct()
+                .map(pair -> new Language(pair.getLeft(), pair.getRight()))
+                .collect(Collectors.toList());
     }
 }
