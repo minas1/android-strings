@@ -3,7 +3,7 @@ Contains tools to convert android resource strings from xml to csv and vice-vers
 Can be used to provide human translators the strings to translate in a readable format and then convert it back to xml to add it to the app.
 
 ## Usage
-1. Use `strings-to-csv` to export the app's strings from xml to csv(s). Export one csv file for each language
+1. Use `strings-to-csv` to export the app's strings from xml to csv(s). Exports one csv file for each language
 2. Send the csv files to human translators where they can input the translations
 3. Use `csv-to-strings` to convert the csv files back to xml
 4. Import the xmls into your app
