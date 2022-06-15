@@ -32,7 +32,7 @@ Convert csv files to xml for using in android apps.
 | Argument | Explanation |
 | -------- | ----------- |
 | originalFile | The `strings.xml` that contains the strings in the app's default language. |
-| localizedFile | `The strings.xml` that contains the strings for the language would want to import translation for. |
+| localizedFile | `The strings.xml` that contains the strings for the language you want to import translation for. |
 | userTranslations | The `csv` file that was provided by the translator. |
 
 Note: Unlike `strings-to-csv`, `csv-to-strings` converts files one  by one.
